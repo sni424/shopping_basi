@@ -3,6 +3,8 @@ import './App.css';
 import React, { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, } from 'react-bootstrap';
 import Data from "./data.js"
+import { Link, Route, Switch } from "react-router-dom";
+import Detail from "./Detail.js";
 
 function App() {
 
@@ -16,8 +18,8 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link ><Link to="/">Home</Link></Nav.Link>
+              <Nav.Link ><Link to="/detail">Detail</Link></Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -29,24 +31,32 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div className='jumbo'>
-        <div className='second-jumbo'>
-          <h1>20% Season Off</h1>
-          <p>this is simple page</p>
-          <button>Learn more</button>
-        </div>
-      </div>
-      <div className='container'>
-        <div className="row">
-          {shoes.map((a, i) => {
-            return <StuffShoes i={i}
-              shoesName={shoes[i].title} shoesContent={shoes[i].content} shoesPrice={shoes[i].price}
-            ></StuffShoes>
-          })
-          }
-        </div>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          <div className='jumbo'>
+            <div className='second-jumbo'>
+              <h1>20% Season Off</h1>
+              <p>this is simple page</p>
+              <button>Learn more</button>
+            </div>
+          </div>
+          <div className='container'>
+            <div className="row">
+              {shoes.map((a, i) => {
+                return <StuffShoes i={i}
+                  shoesName={shoes[i].title} shoesContent={shoes[i].content} shoesPrice={shoes[i].price}
+                ></StuffShoes>
+              })
+              }
+            </div>
+          </div>
+        </Route>
+        <Route path="/detail/:id">
+          <Detail shoes={shoes}></Detail>
+        </Route>
+      </Switch>
     </div>
+
   );
 }
 

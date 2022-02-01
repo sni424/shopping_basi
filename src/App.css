@@ -17,6 +17,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.btn-danger{
+  margin-bottom: 5px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
