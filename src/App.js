@@ -5,6 +5,7 @@ import { Navbar, Container, Nav, NavDropdown, } from 'react-bootstrap';
 import Data from "./data.js"
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail.js";
+import axios from 'axios';
 
 function App() {
 
@@ -14,12 +15,12 @@ function App() {
     <div className="App">
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">ShoesShope</Navbar.Brand>
+          <Navbar.Brand href="/">ShoesShope</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link ><Link to="/">Home</Link></Nav.Link>
-              <Nav.Link ><Link to="/detail">Detail</Link></Nav.Link>
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/detail">Detail</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -49,13 +50,24 @@ function App() {
               })
               }
             </div>
+            <button className='btn_promary' onClick={() => {
+
+              axios.get("https://codingapple1.github.io/shop/data2.json")
+                .then((result) => {
+                  setShoes([...shoes, ...result.data])
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+
+            }}>더보기</button>
           </div>
         </Route>
         <Route path="/detail/:id">
           <Detail shoes={shoes}></Detail>
         </Route>
       </Switch>
-    </div>
+    </div >
 
   );
 }

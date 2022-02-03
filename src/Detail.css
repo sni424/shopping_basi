@@ -1,20 +1,11 @@
-$mainColor : #ff0000;
-
-.red{
-    color: $mainColor;
-}
 .alert{
-    background-color: #eeeeee;
+    background-color: #7e7777;
     padding: 20px;
     border-radius: 5px;
     max-width: 500px;
     width: 100%;
     margin: auto;
 }
-.alert2 {
-    @extend .alert;
-}
-
 .alert p{
     margin-bottom: 0;
     color: red;
