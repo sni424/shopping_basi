@@ -20,7 +20,12 @@
 .btn-danger{
   margin-bottom: 5px;
 }
-
+.btn_promary{
+  background-color: orchid;
+  color: black;
+  font-weight: 800;
+  border-radius: 5px;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
