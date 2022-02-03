@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, } from 'react-bootstrap';
 import Data from "./data.js"
 import { Link, Route, Switch } from "react-router-dom";
@@ -10,6 +10,7 @@ import axios from 'axios';
 function App() {
 
   let [shoes, setShoes] = useState(Data);
+  let [inventory, setInventory] = useState(10);
 
   return (
     <div className="App">
@@ -64,7 +65,7 @@ function App() {
           </div>
         </Route>
         <Route path="/detail/:id">
-          <Detail shoes={shoes}></Detail>
+          <Detail shoes={shoes} inventory={inventory} setInventory={setInventory}></Detail>
         </Route>
       </Switch>
     </div >
