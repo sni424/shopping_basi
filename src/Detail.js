@@ -28,13 +28,13 @@ function Detail(props) {
     }
 
     function changeInventory() {
-        let wow = [...props.inventory];
+        let wow = [...inventory];
         let hello = wow.map((a, i) =>
             a - 1
         );
         props.setInventory(
         )
-        if (props.inventory < 1) {
+        if (inventory < 1) {
             props.setInventory(0);
             alert("재고가 모두 떨여졌습니다.");
         }
@@ -48,7 +48,7 @@ function Detail(props) {
             <input onChange={(e) => { setinputValue(e.target.value); }}></input>
             <div className="row">
                 {alertShow === true
-                    ? <div className="alert"><p>재고가 {props.inventory[0]}개 남았습니다.</p></div>
+                    ? <div className="alert"><p>재고가 {inventory[0]}개 남았습니다.</p></div>
                     : null
                 }
                 <div className="col-md-6">
@@ -59,7 +59,7 @@ function Detail(props) {
                     <p>{props.shoes.find(x => x.id === parseInt(id)).content}</p>
                     <p>{props.shoes.find(x => x.id === parseInt(id)).price}</p>
 
-                    <Inventory inventory={props.inventory} setInventory={props.setInventory}></Inventory>
+                    <Inventory setInventory={props.setInventory}></Inventory>
 
                     <button className="btn btn-danger" onClick={changeInventory}>주문하기</button><br></br>
                     <button className="btn btn-danger" onClick={returnPage}>뒤로가기</button>
@@ -71,9 +71,10 @@ function Detail(props) {
     );
 };
 
-function Inventory(props) {
+function Inventory() {
+    let inventory = useContext(context);
     return (
-        <p>재고 : {props.inventory[0]}</p>
+        <p>재고 : {inventory[0]}</p>
     );
 };
 

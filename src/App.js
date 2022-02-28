@@ -86,7 +86,6 @@ function App() {
 
 function StuffShoes(props) {
   let history = useHistory();
-  let inventory = useContext(context);
 
   return (
     <div className='col-md-4' onClick={() => { history.push('/detail/' + props.i) }}>
