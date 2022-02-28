@@ -1,16 +1,19 @@
 /*eslint-disable*/
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, } from 'react-bootstrap';
 import Data from "./data.js"
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
 import Detail from "./Detail.js";
 import axios from 'axios';
+import Cart from "./Cart";
+
+export let context = React.createContext();//범위 생성
 
 function App() {
 
   let [shoes, setShoes] = useState(Data);
-  let [inventory, setInventory] = useState(10);
+  let [inventory, setInventory] = useState([10, 20, 30, 40]);
 
   return (
     <div className="App">
@@ -43,14 +46,17 @@ function App() {
             </div>
           </div>
           <div className='container'>
-            <div className="row">
-              {shoes.map((a, i) => {
-                return <StuffShoes i={i}
-                  shoesName={shoes[i].title} shoesContent={shoes[i].content} shoesPrice={shoes[i].price}
-                ></StuffShoes>
-              })
-              }
-            </div>
+
+            <context.Provider value={inventory}>
+              <div className="row">
+                {shoes.map((a, i) => {
+                  return <StuffShoes i={i} key={i}
+                    shoesName={shoes[i].title} shoesContent={shoes[i].content} shoesPrice={shoes[i].price}
+                  ></StuffShoes>
+                })
+                }
+              </div>
+            </context.Provider>
             <button className='btn_promary' onClick={() => {
 
               axios.get("https://codingapple1.github.io/shop/data2.json")
@@ -65,7 +71,12 @@ function App() {
           </div>
         </Route>
         <Route path="/detail/:id">
-          <Detail shoes={shoes} inventory={inventory} setInventory={setInventory}></Detail>
+          <context.Provider value={inventory}>
+            <Detail shoes={shoes} inventory={inventory} setInventory={setInventory}></Detail>
+          </context.Provider>
+        </Route>
+        <Route path="/cart">
+          <Cart></Cart>
         </Route>
       </Switch>
     </div >
@@ -74,12 +85,23 @@ function App() {
 }
 
 function StuffShoes(props) {
+  let history = useHistory();
+  let inventory = useContext(context);
+
   return (
-    <div className='col-md-4'>
+    <div className='col-md-4' onClick={() => { history.push('/detail/' + props.i) }}>
       <img alt='shoes1' src={"https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"} width="100%"></img>
       <h4>{props.shoesName}</h4>
       <p>{props.shoesContent} & {props.shoesPrice}₩ </p>
+      <Text index={props.i}></Text>
     </div >
+  );
+};
+
+function Text(props) {
+  let inventory = useContext(context);
+  return (
+    <p>재고 :{inventory[props.index]}</p>
   );
 };
 
